@@ -1,0 +1,48 @@
+body {
+  background-color: #0F0F14 !important;
+  overflow-y: scroll;
+}
+
+// transitions
+.page-enter-active {
+  transition: all 0.2s ease-out;
+}
+.page-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+.page-enter-from,
+.page-leave-to {
+  transform: translateX(-20px);
+  opacity: 0;
+}
+
+.layout-enter-active {
+  transition: all 0.2s ease-out;
+}
+.layout-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+.layout-enter-from,
+.layout-leave-to {
+  transform: translateX(-20px);
+  opacity: 0;
+}
+
+// scrollbar
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #313131;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(203, 1, 1); 
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ec1010; 
+}

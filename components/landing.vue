@@ -4,10 +4,10 @@ const trailerPreview = ref()
 
 <template>
   <div
-    class="landing w-full"
-    style="background: url('http://placekitten.com/150/120') no-repeat cover !important"
+    class="landing w-full relative mb-16"
+    style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(15, 15, 20)), url('https://image.tmdb.org/t/p/original//q2IlzP9bQNDdGLlX9jtms5MaOCh.jpg')"
   >
-    <div class="container mx-auto px-4 md:px-0 mb-16">
+    <div class="container mx-auto px-4 md:px-0">
       <div class="main-landing">
         <h6 class="text-3xl font-semibold my-8">
           Movie Titles
@@ -38,6 +38,8 @@ const trailerPreview = ref()
 .landing {
   min-height: 50vh;
   padding-top: 80px;
+
+  background-repeat: no-repeat;
 }
 
 .main-landing {

@@ -58,14 +58,17 @@ const router = useRouter()
           />
         </div>
       </div>
-      <movies />
+      <movies title="Similiar Movies" class="mt-8" />
     </div>
   </div>
 </template>
 
 <style>
-  .background-cover{
-    margin-top: -120px;
-    padding-top: 120px;
-  }
+.background-cover{
+  margin-top: -120px;
+  padding-top: 120px;
+
+  background-size: cover;
+  background-position: top center;
+}
 </style>

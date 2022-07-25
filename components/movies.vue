@@ -1,7 +1,16 @@
+<script setup lang="ts">
+const props = defineProps({
+  title: {
+    type: String,
+    default: ''
+  }
+})
+</script>
+
 <template>
   <div>
     <h6 class="text-xl font-semibold">
-      Category Title
+      {{ props.title }}
     </h6>
     <div class="movies flex overflow-x-auto mt-4 pb-1">
       <movie-card

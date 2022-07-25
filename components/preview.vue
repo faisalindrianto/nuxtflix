@@ -18,7 +18,17 @@ defineExpose({
 <template>
   <div>
     <n-drawer v-model:show="active" height="90%" placement="bottom">
-      <n-drawer-content title="Trailer Preview">
+      <n-drawer-content>
+        <template #header>
+          <div class="flex items-center">
+            <h6>Preview Trailer</h6>
+            <mdicon
+              name="close"
+              class="ml-auto cursor-pointer"
+              @click="close"
+            />
+          </div>
+        </template>
         <iframe
           type="text/html"
           style="background-color: #000;"
@@ -30,3 +40,9 @@ defineExpose({
     </n-drawer>
   </div>
 </template>
+
+<style>
+.n-drawer-header__main {
+  width: 100%;
+}
+</style>

@@ -1,30 +1,35 @@
 <script setup lang="ts">
 const {
-  originalMovies, trendingMovies,
-  loadingOriginalMovies, loadingTrendingMovies,
-  fetchOriginalMovies, fetchTrendingMovies
+  topMovies, trendingMovies, randomMovie,
+  loadingTopMovies, loadingTrendingMovies,
+  fetchTopMovies, fetchTrendingMovies
 } = useMovie()
 
 onMounted(() => {
-  fetchOriginalMovies()
+  fetchTopMovies()
   fetchTrendingMovies()
 })
+
 </script>
 
 <template>
   <div>
-    <landing />
+    <landing
+      v-if="randomMovie"
+      :loading="loadingTopMovies"
+      :movie="randomMovie"
+    />
     <div class="container mx-auto px-4 md:px-0 mb-20">
       <movies
-        title="Nuxtflix Originals"
-        :movies="originalMovies"
-        :loading="loadingOriginalMovies"
-      />
-      <movies
         title="Trending This Week"
-        class="mt-12"
         :movies="trendingMovies"
         :loading="loadingTrendingMovies"
+      />
+      <movies
+        title="Top Movies"
+        :movies="topMovies"
+        :loading="loadingTopMovies"
+        class="mt-12"
       />
     </div>
   </div>

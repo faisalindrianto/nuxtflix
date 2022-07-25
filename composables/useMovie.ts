@@ -1,5 +1,5 @@
-import { useMessage, useDialog } from 'naive-ui'
-import { Movie } from '@/types'
+import { useMessage, useDialog, useLoadingBar } from 'naive-ui'
+import { Movie, MovieDetail } from '@/types'
 import { useMovieState } from '@/store'
 
 const useMovie = () => {
@@ -7,49 +7,48 @@ const useMovie = () => {
   const movieState = useMovieState()
   const message = useMessage()
   const dialog = useDialog()
+  const loadingBar = useLoadingBar()
+  const router = useRouter()
 
-  const originalMovies = ref<Movie[]>([])
-  const loadingOriginalMovies = ref(false)
+  const topMovies = ref<Movie[]>([])
+  const loadingTopMovies = ref(false)
 
   const trendingMovies = ref<Movie[]>([])
   const loadingTrendingMovies = ref(false)
 
-  const detailMovie = ref({})
-  const loadingDetailMovie = ref(false)
+  const detailMovie = ref(<MovieDetail>{})
 
   const findFavorite = (id: number) => {
     return movieState.favoriteMovies.some(movie => movie.id === id)
   }
 
-  const fetchOriginalMovies = () => {
-    const endpoint = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}`
+  const fetchTopMovies = () => {
+    const endpoint = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}`
 
-    loadingOriginalMovies.value = true
+    loadingTopMovies.value = true
 
     $fetch(endpoint).then((result: any) => {
-      console.log(result)
-      originalMovies.value = result.results.map((el: any) => ({
+      topMovies.value = result.results.map((el: any) => ({
         id: el.id,
-        title: el.name,
+        title: el.original_title,
         description: el.overview,
         year: el.first_air_date,
         rating: el.vote_average,
         poster: `https://image.tmdb.org/t/p/original/${el.poster_path}`
       }))
-      loadingOriginalMovies.value = false
+      loadingTopMovies.value = false
     }).catch((err) => {
       console.log(err)
-      loadingOriginalMovies.value = false
+      loadingTopMovies.value = false
     })
   }
 
   const fetchTrendingMovies = () => {
-    const endpoint = `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`
+    const endpoint = `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`
 
     loadingTrendingMovies.value = true
 
     $fetch(endpoint).then((result: any) => {
-      console.log(result)
       trendingMovies.value = result.results.map((el: any) => ({
         id: el.id,
         title: el.original_title,
@@ -65,9 +64,32 @@ const useMovie = () => {
     })
   }
 
-  const fetchDetailMovie = () => {
-    loadingDetailMovie.value = true
-    loadingDetailMovie.value = false
+  const fetchDetailMovie = (id: number) => {
+    const endpoint = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
+
+    loadingBar.start()
+
+    $fetch(endpoint).then((result: any) => {
+      detailMovie.value = {
+        id: result.id,
+        title: result.original_title,
+        description: result.overview,
+        year: result.release_date,
+        rating: result.vote_average,
+        poster: `https://image.tmdb.org/t/p/original/${result.poster_path}`,
+        trailer: '',
+        genre: result.genres.map((el: any) => el.name),
+        duration: result.runtime
+      }
+      loadingBar.finish()
+    }).catch(() => {
+      message.error("Can't find movie")
+      loadingBar.error()
+
+      setTimeout(() => {
+        router.back()
+      }, 500)
+    })
   }
 
   const addToFavorite = (movie: Movie) => {
@@ -91,15 +113,17 @@ const useMovie = () => {
     })
   }
 
+  const randomMovie = computed(() => trendingMovies.value[Math.floor(Math.random() * trendingMovies.value.length)])
+
   return {
-    originalMovies,
-    loadingOriginalMovies,
+    topMovies,
+    loadingTopMovies,
     trendingMovies,
     loadingTrendingMovies,
     detailMovie,
-    loadingDetailMovie,
+    randomMovie,
 
-    fetchOriginalMovies,
+    fetchTopMovies,
     fetchTrendingMovies,
     fetchDetailMovie,
     addToFavorite,

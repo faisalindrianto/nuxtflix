@@ -15,7 +15,6 @@ export interface MovieDetail {
   rating: number
   poster: string
   trailer: string
-  director: string
   genre: Array<string>
   duration: number
 }

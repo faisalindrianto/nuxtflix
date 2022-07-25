@@ -5,7 +5,6 @@ export interface Movie {
   year: number
   rating: number
   poster: string
-  isFavorited: boolean
 }
 
 export interface MovieDetail {
@@ -19,5 +18,4 @@ export interface MovieDetail {
   director: string
   genre: Array<string>
   duration: number
-  isFavorited: boolean
 }

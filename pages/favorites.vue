@@ -10,12 +10,19 @@ const movieState = useMovieState()
       Your Favorites
     </h6>
 
-    <div class="flex flex-wrap">
+    <div
+      v-if="movieState.favoriteMovies.length"
+      class="flex flex-wrap"
+    >
       <movie-card
         v-for="movie in movieState.favoriteMovies"
         :key="movie.id"
         :movie="movie"
       />
+    </div>
+
+    <div v-else>
+      <span class="text-gray-400 text-xl">There are no favorites movie yet</span>
     </div>
   </div>
 </template>

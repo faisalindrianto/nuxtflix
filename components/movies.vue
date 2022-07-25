@@ -1,10 +1,13 @@
 <script setup lang="ts">
-const props = defineProps({
-  title: {
-    type: String,
-    default: ''
-  }
-})
+import { Movie } from '@/types'
+
+interface moviesProps {
+  title: string
+  movies: Movie[]
+  loading: boolean
+}
+
+const props = defineProps<moviesProps>()
 </script>
 
 <template>
@@ -14,8 +17,9 @@ const props = defineProps({
     </h6>
     <div class="movies flex overflow-x-auto mt-4 pb-1">
       <movie-card
-        v-for="i in 14"
-        :key="i"
+        v-for="movie in props.movies"
+        :key="movie.id"
+        :movie="movie"
       />
     </div>
   </div>

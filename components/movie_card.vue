@@ -1,17 +1,26 @@
 <script setup lang="ts">
 import { useElementHover } from '@vueuse/core'
+import { Movie } from '@/types'
+
+const { findFavorite, addToFavorite, removeFromFavorite } = useMovie()
 
 const movieCard = ref()
 const isHovered = useElementHover(movieCard)
+
+interface movieCardProps {
+  movie: Movie
+}
+
+const props = defineProps<movieCardProps>()
 </script>
 
 <template>
   <div ref="movieCard" class="movie">
     <nuxt-link
-      to="/detail/12"
+      :to="`/detail/${props.movie.id}`"
     >
       <n-image
-        src="https://image.tmdb.org/t/p/original//q2IlzP9bQNDdGLlX9jtms5MaOCh.jpg"
+        :src="props.movie.poster"
         width="160"
         preview-disabled
       />
@@ -20,7 +29,7 @@ const isHovered = useElementHover(movieCard)
       v-if="isHovered"
       class="drawer transition-all duration-300 ease-in p-2"
     >
-      <span class="text-sm font-medium">Judul Lengkap Yang Super Panjang</span>
+      <span class="text-sm font-medium">{{ props.movie.title }}</span>
       <div class="flex items-center">
         <span class="text-xs">2018</span>
         <mdicon
@@ -28,19 +37,33 @@ const isHovered = useElementHover(movieCard)
           size="16"
           name="star"
         />
-        <span class="text-xs font-semibold">6.7</span>
+        <span class="text-xs font-semibold">{{ props.movie.rating }}</span>
       </div>
       <div class="flex mt-1">
         <nuxt-link
-          to="/detail/12"
+          :to="`/detail/${props.movie.id}`"
           class="mr-auto"
         >
           <n-button>
             Detail
           </n-button>
         </nuxt-link>
-        <n-button text>
-          <mdicon name="heart-outline" />
+        <n-button
+          text
+          @click=" findFavorite(props.movie.id)
+            ? removeFromFavorite(props.movie.id)
+            : addToFavorite(props.movie)
+          "
+        >
+          <mdicon
+            v-if="findFavorite(props.movie.id)"
+            name="heart"
+            class="text-red-500"
+          />
+          <mdicon
+            v-else
+            name="heart-outline"
+          />
         </n-button>
       </div>
     </div>

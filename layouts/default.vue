@@ -2,12 +2,14 @@
   <n-config-provider :theme="darkTheme" :theme-overrides="themeOverrides">
     <n-message-provider>
       <n-dialog-provider>
-        <n-layout>
-          <n-layout-content>
-            <navbar />
-            <slot />
-          </n-layout-content>
-        </n-layout>
+        <n-loading-bar-provider>
+          <n-layout>
+            <n-layout-content>
+              <navbar />
+              <slot />
+            </n-layout-content>
+          </n-layout>
+        </n-loading-bar-provider>
       </n-dialog-provider>
     </n-message-provider>
   </n-config-provider>

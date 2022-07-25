@@ -1,5 +1,14 @@
 # NUXTFLIX
 
+Netflix Clone Powered By Nuxt 3, Naive UI, WindiCSS, and Pinia!
+
+## Features
+- Nuxt 3
+- Pinia State Management
+- Naive UI for Custom Component
+- Windi CSS for Utility Class
+- API from Themoviedb
+
 ## Setup
 
 Make sure to install the dependencies:

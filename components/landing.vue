@@ -40,6 +40,7 @@ const trailerPreview = ref()
   padding-top: 80px;
 
   background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .main-landing {

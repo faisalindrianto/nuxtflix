@@ -1,36 +1,35 @@
 <script setup lang="ts">
-const trailerPreview = ref()
+import { Movie } from '@/types'
+
+interface landingProps {
+  loading: boolean
+  movie: Movie
+}
+
+const props = defineProps<landingProps>()
 </script>
 
 <template>
   <div
     class="landing w-full relative mb-16"
-    style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(15, 15, 20)), url('https://image.tmdb.org/t/p/original//q2IlzP9bQNDdGLlX9jtms5MaOCh.jpg')"
+    :style="`background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(15, 15, 20)), url(${props.movie.poster})`"
   >
     <div class="container mx-auto px-4 md:px-0">
       <div class="main-landing">
         <h6 class="text-3xl font-semibold my-8">
-          Movie Titles
+          {{ props.movie.title }}
         </h6>
         <p class="text-base">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum totam animi quam minus fugit aspernatur voluptatum repellat asperiores aut? Voluptate pariatur veniam quasi at explicabo labore dolor, a odit magnam cupiditate iusto facere. Error culpa blanditiis commodi odio. Expedita id tempore molestias aliquid aspernatur iusto quaerat numquam nihil.
+          {{ props.movie.description }}
         </p>
-        <div class="flex mt-8">
-          <n-button
-            class="mr-4"
-            @click="trailerPreview.show()"
-          >
-            <span class="mr-2">Play Trailer</span>
-            <mdicon name="play" />
-          </n-button>
-          <n-button text>
-            <mdicon name="heart-outline" />
-          </n-button>
-        </div>
+        <n-button
+          class="mt-8"
+        >
+          <span class="mr-2">Watch</span>
+          <mdicon name="play" />
+        </n-button>
       </div>
     </div>
-
-    <preview ref="trailerPreview" />
   </div>
 </template>
 

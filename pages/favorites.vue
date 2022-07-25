@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useMovieState } from '@/store'
+
+const movieState = useMovieState()
 </script>
 
 <template>
@@ -7,13 +10,12 @@
       Your Favorites
     </h6>
 
-    <n-grid cols="1 s:2 m:6 xl:9" :y-gap="8" responsive="screen">
-      <n-grid-item
-        v-for="i in 12"
-        :key="i"
-      >
-        <movie-card />
-      </n-grid-item>
-    </n-grid>
+    <div class="flex flex-wrap">
+      <movie-card
+        v-for="movie in movieState.favoriteMovies"
+        :key="movie.id"
+        :movie="movie"
+      />
+    </div>
   </div>
 </template>
